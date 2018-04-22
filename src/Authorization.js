@@ -5,7 +5,7 @@ export default class Authorization extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {loginIsEmpty: true,
+		this.state = {emailIsEmpty: true,
 					  passwordIsEmpty: true};
 		this.onBtnClickHandler = this.onBtnClickHandler.bind(this);
 		this.onBtnRegistrationClickHandler = this.onBtnRegistrationClickHandler.bind(this);
@@ -13,16 +13,16 @@ export default class Authorization extends Component {
 	}
 
 	componentDidMount() {
-		ReactDOM.findDOMNode(this.refs.login).focus();
+		ReactDOM.findDOMNode(this.refs.email).focus();
 	}
 	onBtnClickHandler(e) {
 		e.preventDefault();
 
-		let login = ReactDOM.findDOMNode(this.refs.login).value;
+		let email = ReactDOM.findDOMNode(this.refs.email).value;
 		let password = ReactDOM.findDOMNode(this.refs.password).value;
 
 		let user = {
-			email: login,
+			email: email,
 			password: password
 		};
 
@@ -59,17 +59,17 @@ export default class Authorization extends Component {
 
   render() {
 
-    var loginIsEmpty = this.state.loginIsEmpty,
+    var emailIsEmpty = this.state.emailIsEmpty,
       passwordIsEmpty = this.state.passwordIsEmpty;
 
     return (
       <form className='add cf'>
 				<input
 					type='text'
-					className='login'
-					onChange={this.onFieldChange.bind(this, 'loginIsEmpty')}
+					className='email'
+					onChange={this.onFieldChange.bind(this, 'emailIsEmpty')}
 					placeholder='Логин'
-					ref='login'
+					ref='email'
 				/>
 				<input
 					type='text'
@@ -82,7 +82,7 @@ export default class Authorization extends Component {
 								className='add__btn'
 								onClick={this.onBtnClickHandler}
 								ref='alert_button'
-								disabled={loginIsEmpty || passwordIsEmpty}>
+								disabled={emailIsEmpty || passwordIsEmpty}>
 								Авторизоваться
 				</button>
 				<button
