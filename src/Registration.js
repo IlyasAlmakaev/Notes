@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-var users = [];
-
 export default class Registration extends Component {
 
 	constructor(props) {
@@ -10,12 +8,14 @@ export default class Registration extends Component {
 		this.state = {loginIsEmpty: true,
 					  passwordIsEmpty: true};
 		this.onBtnClickHandler = this.onBtnClickHandler.bind(this);
+		this.onBtnAuthorizationClickHandler = this.onBtnAuthorizationClickHandler.bind(this);
 		this.onFieldChange = this.onFieldChange.bind(this);			  
 	}
 
 	componentDidMount() {
 		ReactDOM.findDOMNode(this.refs.login).focus();
 	}
+
 	onBtnClickHandler(e) {
 		e.preventDefault();
 
@@ -25,18 +25,33 @@ export default class Registration extends Component {
 		let password = ReactDOM.findDOMNode(this.refs.password).value;
 
 		let user = {
-			login: login,
+			email: login,
 			password: password
 		};
 
-		users.push(user);
+		let self = this;
 
-		//loginField.value = '';
-		//passwordField.value = '';
-
-		console.log(users);
-		this.props.history.push('/notes');
+		fetch('/api/Users', {  
+			method: 'post',  
+			headers: {
+				'Accept': 'application/json, text/plain, */*',
+				'Content-Type': 'application/json'
+			},  
+			body: JSON.stringify(user)  
+		}).then(function(res) {
+			if (res.status === 200 && res.ok === true) {
+				self.props.history.push('/notes');
+			}
+			console.log(res);
+		})		
 	}
+
+	onBtnAuthorizationClickHandler(e) {
+		e.preventDefault();
+
+		this.props.history.push('/');
+	}
+
 	onFieldChange(fieldName, e) {
 		if (e.target.value.trim().length > 0) {
 			this.setState({[''+fieldName]: false})
@@ -72,6 +87,12 @@ export default class Registration extends Component {
 								ref='alert_button'
 								disabled={loginIsEmpty || passwordIsEmpty}>
 								Зарегистрироваться
+				</button>
+				<button
+								className='add__btn'
+								onClick={this.onBtnAuthorizationClickHandler}
+								ref='alert_button'>
+								На авторизацию
 				</button>
 			</form>
     );

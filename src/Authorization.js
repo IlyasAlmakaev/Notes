@@ -8,6 +8,7 @@ export default class Authorization extends Component {
 		this.state = {loginIsEmpty: true,
 					  passwordIsEmpty: true};
 		this.onBtnClickHandler = this.onBtnClickHandler.bind(this);
+		this.onBtnRegistrationClickHandler = this.onBtnRegistrationClickHandler.bind(this);
 		this.onFieldChange = this.onFieldChange.bind(this);			  
 	}
 
@@ -21,12 +22,33 @@ export default class Authorization extends Component {
 		let password = ReactDOM.findDOMNode(this.refs.password).value;
 
 		let user = {
-			login: login,
+			email: login,
 			password: password
 		};
 
-		this.props.history.push('/notes');
+		let self = this;
+
+		fetch('/api/Users/login', {  
+			method: 'post',  
+			headers: {
+				'Accept': 'application/json, text/plain, */*',
+				'Content-Type': 'application/json'
+			},  
+			body: JSON.stringify(user) 
+		}).then(function(res) {
+			if (res.status === 200 && res.ok === true) {
+				self.props.history.push('/notes');
+			}
+			console.log(res);
+		})
 	}
+
+	onBtnRegistrationClickHandler(e) {
+		e.preventDefault();
+
+		this.props.history.push('/registration');
+	}
+
 	onFieldChange(fieldName, e) {
 		if (e.target.value.trim().length > 0) {
 			this.setState({[''+fieldName]: false})
@@ -62,6 +84,12 @@ export default class Authorization extends Component {
 								ref='alert_button'
 								disabled={loginIsEmpty || passwordIsEmpty}>
 								Авторизоваться
+				</button>
+				<button
+								className='add__btn'
+								onClick={this.onBtnRegistrationClickHandler}
+								ref='alert_button'>
+								На регистрацию
 				</button>
 			</form>
     );
