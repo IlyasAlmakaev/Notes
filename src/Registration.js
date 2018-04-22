@@ -40,7 +40,9 @@ export default class Registration extends Component {
 			if (res.status === 200 && res.ok === true) {
 				self.props.history.push('/notes');
 			}
-			console.log(res);
+
+			//TODO: отправка токена/id пользователя в "Notes"
+			console.log(res.json());
 		})		
 	}
 
