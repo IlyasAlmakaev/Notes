@@ -40,7 +40,7 @@ width: 210px;
 border: 1px dashed rgba(0, 89, 181, 0.82);
 padding: 5px;
 }
-.login, .password, .add__btn, .add__checkrule {
+.email, .password, .add__btn, .add__checkrule {
 display: block;
 margin: 0 0 5px 0;
 padding: 5px;

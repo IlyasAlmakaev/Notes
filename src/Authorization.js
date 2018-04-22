@@ -68,7 +68,7 @@ export default class Authorization extends Component {
 					type='text'
 					className='email'
 					onChange={this.onFieldChange.bind(this, 'emailIsEmpty')}
-					placeholder='Логин'
+					placeholder='Электронная почта'
 					ref='email'
 				/>
 				<input
