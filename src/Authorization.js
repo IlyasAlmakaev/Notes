@@ -40,7 +40,7 @@ export default class Authorization extends Component {
 				self.props.history.push('/notes');
 			}
 
-			//TODO: отправка токена/id пользователя в "Notes"
+			//TODO: отправка токена/id пользователя в "Notes" c помощью Redux-Thunk
 			console.log(res.json());
 		})
 	}
