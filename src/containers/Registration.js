@@ -1,62 +1,56 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-export default class Authorization extends Component {
+const API_REGISTRATION_URL = 'api/Users';
+
+export default class Registration extends Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {emailIsEmpty: true,
 					  passwordIsEmpty: true};
 		this.onBtnClickHandler = this.onBtnClickHandler.bind(this);
-		this.onBtnRegistrationClickHandler = this.onBtnRegistrationClickHandler.bind(this);
+		this.onBtnAuthorizationClickHandler = this.onBtnAuthorizationClickHandler.bind(this);
 		this.onFieldChange = this.onFieldChange.bind(this);			  
 	}
 
 	componentDidMount() {
 		ReactDOM.findDOMNode(this.refs.email).focus();
 	}
+
 	onBtnClickHandler(e) {
 		e.preventDefault();
 
-		let email = ReactDOM.findDOMNode(this.refs.email).value;
-		let password = ReactDOM.findDOMNode(this.refs.password).value;
-
 		let user = {
-			email: email,
-			password: password
+			email: this.refs.email.value,
+			password: this.refs.password.value
 		};
 
-		let self = this;
-
-		fetch('/api/Users/login', {  
+		fetch(API_REGISTRATION_URL, {  
 			method: 'post',  
 			headers: {
 				'Accept': 'application/json, text/plain, */*',
 				'Content-Type': 'application/json'
 			},  
-			body: JSON.stringify(user) 
-		}).then(function(res) {
+			body: JSON.stringify(user)  
+		}).then(res => {
 			if (res.status === 200 && res.ok === true) {
-				self.props.history.push('/notes');
+				this.props.history.push('/notes');
 			}
 
 			//TODO: отправка токена/id пользователя в "Notes" c помощью Redux-Thunk
 			console.log(res.json());
-		})
+		})		
 	}
 
-	onBtnRegistrationClickHandler(e) {
+	onBtnAuthorizationClickHandler(e) {
 		e.preventDefault();
 
-		this.props.history.push('/registration');
+		this.props.history.push('/');
 	}
 
 	onFieldChange(fieldName, e) {
-		if (e.target.value.trim().length > 0) {
-			this.setState({[''+fieldName]: false})
-		} else {
-			this.setState({[''+fieldName]: true})
-		}
+		this.setState({[fieldName]: !e.target.value.trim().length})
 	}
 
   render() {
@@ -72,6 +66,7 @@ export default class Authorization extends Component {
 					onChange={this.onFieldChange.bind(this, 'emailIsEmpty')}
 					placeholder='Электронная почта'
 					ref='email'
+					value={this.state.value}
 				/>
 				<input
 					type='text'
@@ -79,19 +74,20 @@ export default class Authorization extends Component {
 					onChange={this.onFieldChange.bind(this, 'passwordIsEmpty')}
 					placeholder='Пароль'
 					ref='password'
+					value={this.state.value}
 				/>
 				<button
 								className='add__btn'
 								onClick={this.onBtnClickHandler}
 								ref='alert_button'
 								disabled={emailIsEmpty || passwordIsEmpty}>
-								Авторизоваться
+								Зарегистрироваться
 				</button>
 				<button
 								className='add__btn'
-								onClick={this.onBtnRegistrationClickHandler}
+								onClick={this.onBtnAuthorizationClickHandler}
 								ref='alert_button'>
-								На регистрацию
+								На авторизацию
 				</button>
 			</form>
     );
