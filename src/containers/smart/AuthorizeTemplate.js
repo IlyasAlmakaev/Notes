@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-const API_REGISTRATION_URL = 'api/Users';
-
 export default class AuthorizeTemplate extends Component {
 
 	constructor(props) {
