@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Switch, Route} from 'react-router-dom';
-import Registration from './Registration.js'
-import Authorization from './Authorization.js'
+import Registration from './containers/Registration.js'
+import Authorization from './containers/Authorization.js'
 import Notes from './Notes.js'
 import './App.css';
 
