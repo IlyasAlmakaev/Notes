@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import {request} from './ModuleHttp';
 
 export default class AuthorizeTemplate extends Component {
 
