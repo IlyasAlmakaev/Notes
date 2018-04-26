@@ -77,4 +77,8 @@ color: #999;
   border: none;
   font-size: 12px;
 }
+.notes__count {
+  margin: 10px 0 0 0;
+  display: block;
+}
 

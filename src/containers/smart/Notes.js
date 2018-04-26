@@ -1,12 +1,28 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+var notesComponents = [
+	{
+		noteText: 'Саша Печкин'
+	},
+	{
+		noteText: 'Просто Вася'
+	},
+	{
+		noteText: 'Гость'
+	}
+]
+
 class Note extends Component {
 
   static propTypes = {
-    data: PropTypes.arrayOf(PropTypes.shape({
-      noteText: PropTypes.string.isRequired
-    })).isRequired,
+    data: PropTypes.oneOfType([
+      PropTypes.shape({
+        noteText: PropTypes.string.isRequired}),
+      PropTypes.arrayOf(PropTypes.shape({
+        noteText: PropTypes.string.isRequired
+      })),
+    ]).isRequired 
  }
 
   static defaultProps = {
@@ -30,10 +46,10 @@ class Note extends Component {
   render() {
 
     return (
-    <form className='note'>
+    <div className='note'>
     <h3>{this.state.noteText}</h3>
     <label className='add__checkrule'>
-        <input type='checkbox' defaultCheked={false} ref='checkrule' onChange={this.onCheckComplite} />Выполнено
+        <input type='checkbox' ref='checkrule' onChange={this.onCheckComplite} />Выполнено
     </label>
     <button
       className='add__btn'
@@ -41,7 +57,7 @@ class Note extends Component {
       ref='alert_button'>
       Удалить заметку
     </button>
-    </form>)
+    </div>)
   }
 }
 
@@ -65,9 +81,9 @@ class NotesList extends Component {
 		}
 
     return (
-    <form className='note'>
+    <div>
     {notesTemplate}
-    </form>)
+    </div>)
   }
 }
 
@@ -82,7 +98,7 @@ export default class Notes extends Component {
     return (
       <form className='notes'>
         <h1>Заметки</h1>
-        <Note />
+        <NotesList data={notesComponents} />
         <button
           className='add__btn'
           onClick={this.onAddNoteBtnClickHandler}
