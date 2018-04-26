@@ -25,21 +25,9 @@ export default class AuthorizeTemplate extends Component {
 			password: this.refs.password.value
 		};
 
-		fetch(this.props.apiUrl, {  
-			method: 'post',  
-			headers: {
-				'Accept': 'application/json, text/plain, */*',
-				'Content-Type': 'application/json'
-			},  
-			body: JSON.stringify(user)  
-		}).then(res => {
-			if (res.status === 200 && res.ok === true) {
-				this.props.history.push('/notes');
-			}
-
-			//TODO: отправка токена/id пользователя в "Notes" c помощью Redux-Thunk
-			console.log(res.json());
-		})		
+		request(this.props.apiUrl, user)
+		.then(data => this.props.history.push('/notes'))
+		.catch(error => alert(error));	
 	}
 
 	onBtnGoClickHandler(e) {

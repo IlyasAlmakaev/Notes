@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-var notesComponents = [
+let notesComponents = [
 	{
 		noteText: 'Саша Печкин'
 	},
@@ -32,8 +32,14 @@ class Note extends Component {
   constructor(props) {
 		super(props);
 		this.state = {noteText: this.props.data.noteText};
-			  
-	}
+		this.onEditNoteBtnClickHandler = this.onEditNoteBtnClickHandler.bind(this);
+		this.onDeleteNoteBtnClickHandler = this.onDeleteNoteBtnClickHandler.bind(this);
+		this.onCheckComplite = this.onCheckComplite.bind(this);	  
+  }
+  onEditNoteBtnClickHandler(e) {
+		e.preventDefault();
+    this.props.history.push('/editNote');
+  }
   onDeleteNoteBtnClickHandler(e) {
 		e.preventDefault();
 
@@ -47,7 +53,7 @@ class Note extends Component {
 
     return (
     <div className='note'>
-    <h3>{this.state.noteText}</h3>
+    <h3 onClick={this.onEditNoteBtnClickHandler}>{this.state.noteText}</h3>
     <label className='add__checkrule'>
         <input type='checkbox' ref='checkrule' onChange={this.onCheckComplite} />Выполнено
     </label>
@@ -63,16 +69,21 @@ class Note extends Component {
 
 class NotesList extends Component {
 
+  constructor(props) {
+		super(props); 
+  }
+
   render() {
 
     let data = this.props.data;
-		let notesTemplate;
+    let notesTemplate;
+    let self = this;
 
 		if (data.length > 0) {
 			notesTemplate = data.map(function(item, index) {
 				return (
 					<div key={index}>
-						<Note data={item} />
+						<Note data={item} history={self.props.history}/>
 					</div>
 				)
 			})
@@ -89,16 +100,23 @@ class NotesList extends Component {
 
 export default class Notes extends Component {
 
-  onAddNoteBtnClickHandler(e) {
-		e.preventDefault();
+  constructor(props) {
+		super(props);
+		this.onAddNoteBtnClickHandler = this.onAddNoteBtnClickHandler.bind(this);  
+  }
 
+  onAddNoteBtnClickHandler(e) {
+    e.preventDefault();
+    // TODO: переправить на нужную страницу
+    this.props.history.push('/editNote');
 	}
 
   render() {
+    let self = this;
     return (
       <form className='notes'>
         <h1>Заметки</h1>
-        <NotesList data={notesComponents} />
+        <NotesList data={notesComponents} history={self.props.history} />
         <button
           className='add__btn'
           onClick={this.onAddNoteBtnClickHandler}
