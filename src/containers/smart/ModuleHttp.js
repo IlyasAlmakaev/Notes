@@ -7,11 +7,5 @@ export const request = (url, data) => {
 				'Content-Type': 'application/json'
 			},  
 			body: JSON.stringify(data)  
-		}).then(res => {
-			if (res.status === 200 && res.ok === true) {
-				return res.json();
-			} else {
-				throw new Error('Network error');
-			}
 		})
 }
