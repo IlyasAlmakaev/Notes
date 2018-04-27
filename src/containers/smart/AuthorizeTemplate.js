@@ -1,8 +1,25 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {request} from './ModuleHttp';
+import { request } from './ModuleHttp';
+import { itemsFetchingData } from './RequestHandle';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-export default class AuthorizeTemplate extends Component {
+const mapStateToProps = (state) => {
+	return {
+		items: state.items,
+		error: state.itemsHasErrored,
+		isLoading: state.itemsIsLoading
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+		fetchData: (url, user) => dispatch(itemsFetchingData(url, user))
+	};
+};
+
+class AuthorizeTemplate extends Component {
 
 	constructor(props) {
 		super(props);
@@ -13,8 +30,21 @@ export default class AuthorizeTemplate extends Component {
 		this.onFieldChange = this.onFieldChange.bind(this);			  
 	}
 
+	static propTypes = {
+		fetchData: PropTypes.func.isRequired,
+	 }
+
 	componentDidMount() {
 		ReactDOM.findDOMNode(this.refs.email).focus();
+	}
+
+	componentWillReceiveProps(props) {	
+		console.log("prrr " + this.props);
+		if (this.props.error) {
+			alert(this.props.error)
+		} else if (this.props.items) {
+			this.props.history.push('/notes');
+		}
 	}
 
 	onBtnClickHandler(e) {
@@ -25,9 +55,7 @@ export default class AuthorizeTemplate extends Component {
 			password: this.refs.password.value
 		};
 
-		request(this.props.apiUrl, user)
-		.then(data => this.props.history.push('/notes'))
-		.catch(error => alert(error));	
+		this.props.fetchData(this.props.apiUrl, user)
 	}
 
 	onBtnGoClickHandler(e) {
@@ -80,3 +108,5 @@ export default class AuthorizeTemplate extends Component {
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthorizeTemplate);

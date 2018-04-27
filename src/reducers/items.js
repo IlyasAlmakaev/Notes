@@ -1,7 +1,7 @@
 export function itemsHasErrored(state = '', action) {
     switch (action.type) {
         case 'ITEMS_HAS_ERRORED':
-            return action.hasErrored;
+            return action.error;
         
         default:
             return state;

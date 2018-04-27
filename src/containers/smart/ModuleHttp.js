@@ -6,6 +6,6 @@ export const request = (url, data) => {
 				'Accept': 'application/json, text/plain, */*',
 				'Content-Type': 'application/json'
 			},  
-			body: JSON.stringify(data)  
+			body: data
 		})
 }
