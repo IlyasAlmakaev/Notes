@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { request } from './ModuleHttp';
-import { authorizeRequest } from './RequestHandle';
+import { authorizeRequest, setUserID } from './RequestHandle';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -14,7 +14,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		fetchData: (url, user) => dispatch(authorizeRequest(url, user))
+		fetchData: (url, user) => dispatch(authorizeRequest(url, user)),
+		setUserIDFromForm: (id) => dispatch(setUserID(id))
 	};
 };
 
@@ -31,6 +32,7 @@ class AuthorizeTemplate extends Component {
 
 	static propTypes = {
 		fetchData: PropTypes.func.isRequired,
+		setUserID: PropTypes.func,
 		items: PropTypes.object.isRequired,
 		error: PropTypes.string.isRequired
 	 }
@@ -44,7 +46,13 @@ class AuthorizeTemplate extends Component {
 		if (props.error) {
 			alert(props.error)
 		} else if (props.items) {
+			
 			this.props.history.push(this.props.nextForm);
+
+			if (this.props.nextForm === "/notes") {
+				console.log("itt11 " + props.items.id + "err" + props.error);
+				props.setUserIDFromForm(props.items.id);
+			}
 		}
 	}
 

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 let notesComponents = [
 	{
@@ -13,6 +14,12 @@ let notesComponents = [
 	}
 ]
 
+const mapStateToProps = (state) => {
+	return {
+		id: state.task.id
+	};
+}
+
 class Note extends Component {
 
   static propTypes = {
@@ -22,7 +29,7 @@ class Note extends Component {
       PropTypes.arrayOf(PropTypes.shape({
         noteText: PropTypes.string.isRequired
       })),
-    ]).isRequired 
+    ]).isRequired
  }
 
   static defaultProps = {
@@ -36,10 +43,6 @@ class Note extends Component {
 		this.onDeleteNoteBtnClickHandler = this.onDeleteNoteBtnClickHandler.bind(this);
 		this.onCheckComplite = this.onCheckComplite.bind(this);	  
   }
-
-  componentDidMount() {
-		
-	}
 
   onEditNoteBtnClickHandler(e) {
 		e.preventDefault();
@@ -103,11 +106,19 @@ class NotesList extends Component {
   }
 }
 
-export default class Notes extends Component {
+class Notes extends Component {
+
+  static propTypes = {
+    id: PropTypes.number
+ }
 
   constructor(props) {
 		super(props);
 		this.onAddNoteBtnClickHandler = this.onAddNoteBtnClickHandler.bind(this);  
+  }
+
+  componentDidMount() {
+		console.log("idd" + this.props.id);
   }
 
   onAddNoteBtnClickHandler(e) {
@@ -132,3 +143,5 @@ export default class Notes extends Component {
     );
   }
 }
+
+export default connect(mapStateToProps)(Notes);

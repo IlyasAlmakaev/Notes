@@ -1,6 +1,6 @@
 import { request } from "./ModuleHttp";
 import { GET_USER_DATA, GET_ERROR } from "../constants/User";
-import { GET_TASK_DATA } from "../constants/Task";
+import { GET_TASK_DATA, GET_USER_ID } from "../constants/Task";
 
 export function itemsFetchingData(url, user, type, method) {
     return (dispatch) => {
@@ -19,6 +19,12 @@ export function itemsFetchingData(url, user, type, method) {
 
 export function authorizeRequest(url, user) {
     return itemsFetchingData(url, user, GET_USER_DATA, 'post')
+}
+
+export function setUserID(id) {
+    return (dispatch) => {
+        dispatch({ type: GET_USER_ID, payload: id })
+    }
 }
 
 // export function getTasks(url, id) {
