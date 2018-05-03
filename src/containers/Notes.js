@@ -36,6 +36,11 @@ class Note extends Component {
 		this.onDeleteNoteBtnClickHandler = this.onDeleteNoteBtnClickHandler.bind(this);
 		this.onCheckComplite = this.onCheckComplite.bind(this);	  
   }
+
+  componentDidMount() {
+		
+	}
+
   onEditNoteBtnClickHandler(e) {
 		e.preventDefault();
     this.props.history.push('/editNote');

@@ -44,7 +44,7 @@ class AuthorizeTemplate extends Component {
 		if (props.error) {
 			alert(props.error)
 		} else if (props.items) {
-			this.props.history.push('/notes');
+			this.props.history.push(this.props.nextForm);
 		}
 	}
 

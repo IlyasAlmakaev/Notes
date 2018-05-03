@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import AuthorizeTemplate from '../smart/AuthorizeTemplate';
-
-const API_REGISTRATION_URL = 'api/Users';
+import AuthorizeTemplate from '../containers/AuthorizeTemplate';
+import { API_REGISTRATION_URL } from '../constants/User';
 
 export default class Registration extends Component {
 
@@ -11,7 +10,8 @@ export default class Registration extends Component {
 	  <AuthorizeTemplate navigateAddress={'/'} 
 						   apiUrl={API_REGISTRATION_URL}
 						   firstNameButton={'Зарегистрироваться'}
-						   secondNameButton={'На авторизацию'} 
+							 secondNameButton={'На авторизацию'} 
+							 nextForm={'/'}
 						   history={this.props.history} />
     );
   }

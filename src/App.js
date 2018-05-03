@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {Switch, Route} from 'react-router-dom';
-import Registration from './containers/dump/Registration.js'
-import Authorization from './containers/dump/Authorization.js'
-import Notes from './containers/smart/Notes.js'
-import EditNote from './containers/smart/EditNote.js'
+import Registration from './components/Registration.js'
+import Authorization from './components/Authorization.js'
+import Notes from './containers/Notes.js'
+import EditNote from './containers/EditNote.js'
 import './App.css';
 
 class App extends Component {
