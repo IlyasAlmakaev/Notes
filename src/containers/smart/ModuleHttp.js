@@ -1,7 +1,7 @@
 
-export const request = (url, data) => {
+export const request = (url, data, method) => {
     return fetch(url, {  
-			method: 'post',  
+			method: method,  
 			headers: {
 				'Accept': 'application/json, text/plain, */*',
 				'Content-Type': 'application/json'

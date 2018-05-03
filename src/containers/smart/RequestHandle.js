@@ -1,8 +1,9 @@
 import { request } from "./ModuleHttp";
+import { GET_USER_DATA, GET_ERROR } from "../../constants/User";
 
-export function itemsFetchingData(url, user) {
+export function itemsFetchingData(url, user, type, method) {
     return (dispatch) => {
-        request(url, JSON.stringify(user)).then((res) => {
+        request(url, JSON.stringify(user), method).then((res) => {
 			if (res.status !== 200 && !res.ok) {
                 throw Error(res.statusText);
             } 
@@ -10,7 +11,11 @@ export function itemsFetchingData(url, user) {
 			return res;
         })
         .then((res) => res.json())
-        .then((items) => dispatch({ type: 'GET_USER_DATA', payload: items }))
-        .catch((error) => dispatch({ type: 'GET_ERROR', payload: error.message }));
+        .then((items) => dispatch({ type: type, payload: items }))
+        .catch((error) => dispatch({ type: GET_ERROR, payload: error.message }));
     }
+}
+
+export function authorizeRequest(url, user) {
+    return itemsFetchingData(url, user, GET_USER_DATA, 'post')
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { request } from './ModuleHttp';
-import { itemsFetchingData } from './RequestHandle';
+import { authorizeRequest } from './RequestHandle';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -14,7 +14,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		fetchData: (url, user) => dispatch(itemsFetchingData(url, user))
+		fetchData: (url, user) => dispatch(authorizeRequest(url, user))
 	};
 };
 
