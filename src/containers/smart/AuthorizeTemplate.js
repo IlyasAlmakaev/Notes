@@ -31,7 +31,7 @@ class AuthorizeTemplate extends Component {
 
 	static propTypes = {
 		fetchData: PropTypes.func.isRequired,
-		items: PropTypes.array.isRequired,
+		items: PropTypes.object.isRequired,
 		error: PropTypes.string.isRequired
 	 }
 
@@ -40,7 +40,7 @@ class AuthorizeTemplate extends Component {
 	}
 
 	componentWillReceiveProps(props) {	
-		console.log("itt" + props.items + "err" + props.error);
+		console.log("itt " + props.items.id + "err" + props.error);
 		if (props.error) {
 			alert(props.error)
 		} else if (props.items) {

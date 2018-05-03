@@ -1,7 +1,7 @@
 import { GET_USER_DATA, GET_ERROR } from "../constants/User";
 
 const initialState = {
-    data: [],
+    data: {},
     error: ''
 }
 
