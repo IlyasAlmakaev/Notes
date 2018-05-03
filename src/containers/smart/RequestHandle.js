@@ -14,7 +14,7 @@ export function itemsFetchingData(url, user) {
 			return res;
         })
         .then((res) => res.json())
-        .then((items) => dispatch(itemsFetchDataSuccess(items)))
-        .catch((error) => dispatch(itemsHasErrored(error)));
+        .then((items) => dispatch({ type: 'GET_USER_DATA', payload: items }))
+        .catch((error) => dispatch({ type: 'GET_ERROR', payload: error.message }));
     }
 }

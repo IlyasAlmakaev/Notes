@@ -7,9 +7,8 @@ import PropTypes from 'prop-types';
 
 const mapStateToProps = (state) => {
 	return {
-		items: state.items,
-		error: state.itemsHasErrored,
-		isLoading: state.itemsIsLoading
+		items: state.user.data,
+		error: state.user.error
 	};
 };
 
@@ -32,6 +31,8 @@ class AuthorizeTemplate extends Component {
 
 	static propTypes = {
 		fetchData: PropTypes.func.isRequired,
+		items: PropTypes.array.isRequired,
+		error: PropTypes.string.isRequired
 	 }
 
 	componentDidMount() {
@@ -39,10 +40,10 @@ class AuthorizeTemplate extends Component {
 	}
 
 	componentWillReceiveProps(props) {	
-		console.log("prrr " + this.props);
-		if (this.props.error) {
-			alert(this.props.error)
-		} else if (this.props.items) {
+		console.log("itt" + props.items + "err" + props.error);
+		if (props.error) {
+			alert(props.error)
+		} else if (props.items) {
 			this.props.history.push('/notes');
 		}
 	}
