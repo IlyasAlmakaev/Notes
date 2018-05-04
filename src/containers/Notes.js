@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { getTasks, addTask } from './RequestHandle';
 
 let notesComponents = [
 	{
@@ -16,9 +17,19 @@ let notesComponents = [
 
 const mapStateToProps = (state) => {
 	return {
-		id: state.task.id
+    id: state.task.id,
+    tasks: state.task.tasks,
+    task: state.task.task,
+		error: state.task.error
 	};
-}
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+    getTasksFromForm: (id) => dispatch(getTasks(id)),
+    addTaskFromForm: (id, data) => dispatch(addTask(id, data))
+	};
+};
 
 class Note extends Component {
 
@@ -48,6 +59,7 @@ class Note extends Component {
 		e.preventDefault();
     this.props.history.push('/editNote');
   }
+
   onDeleteNoteBtnClickHandler(e) {
 		e.preventDefault();
 
@@ -109,7 +121,12 @@ class NotesList extends Component {
 class Notes extends Component {
 
   static propTypes = {
-    id: PropTypes.string
+    id: PropTypes.string,
+    getTasksFromForm: PropTypes.func.isRequired,
+    addTaskFromForm: PropTypes.func.isRequired,
+    tasks: PropTypes.object.isRequired,
+    task: PropTypes.object.isRequired,
+    error: PropTypes.string.isRequired
  }
 
   constructor(props) {
@@ -121,10 +138,21 @@ class Notes extends Component {
 		console.log("idd" + this.props.id);
   }
 
+  componentWillReceiveProps(props) {	
+		console.log("tsss " + props.tasks + "err" + props.error);
+	}
+
   onAddNoteBtnClickHandler(e) {
     e.preventDefault();
+
+    let data = {
+      title: 'teeesxxt',
+      id: this.props.id
+		};
     // TODO: переправить на нужную страницу
-    this.props.history.push('/editNote');
+  //  this.props.addTaskFromForm(this.props.id, data)
+    this.props.getTasksFromForm(this.props.id)
+  //  this.props.history.push('/editNote');
 	}
 
   render() {
@@ -144,4 +172,4 @@ class Notes extends Component {
   }
 }
 
-export default connect(mapStateToProps)(Notes);
+export default connect(mapStateToProps, mapDispatchToProps)(Notes);

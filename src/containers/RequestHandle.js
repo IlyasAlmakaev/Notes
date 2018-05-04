@@ -1,10 +1,40 @@
-import { request } from "./ModuleHttp";
+import { request, getRequest, postRequest } from "./ModuleHttp";
 import { GET_USER_DATA, GET_ERROR } from "../constants/User";
-import { GET_TASK_DATA, GET_USER_ID } from "../constants/Task";
+import { GET_TASKS, GET_USER_ID, GET_TASK, API_GET_TASKS, API_ADD_TASK } from "../constants/Task";
 
 export function itemsFetchingData(url, user, type, method) {
     return (dispatch) => {
         request(url, JSON.stringify(user), method).then((res) => {
+			if (res.status !== 200 && !res.ok) {
+                throw Error(res.statusText);
+            } 
+				
+			return res;
+        })
+        .then((res) => res.json())
+        .then((items) => dispatch({ type: type, payload: items }))
+        .catch((error) => dispatch({ type: GET_ERROR, payload: error.message }));
+    }
+}
+
+export function itemsFetchingDataFromGetRequest(url, type, method, id) {
+    return (dispatch) => {
+        getRequest(url, method, id).then((res) => {
+			if (res.status !== 200 && !res.ok) {
+                throw Error(res.statusText);
+            } 
+				
+			return res;
+        })
+        .then((res) => res.json())
+        .then((items) => dispatch({ type: type, payload: items }))
+        .catch((error) => dispatch({ type: GET_ERROR, payload: error.message }));
+    }
+}
+
+export function itemsFetchingDataFromPostRequest(url, type, method, id, data) {
+    return (dispatch) => {
+        postRequest(url, method, id, JSON.stringify(data)).then((res) => {
 			if (res.status !== 200 && !res.ok) {
                 throw Error(res.statusText);
             } 
@@ -27,6 +57,11 @@ export function setUserID(id) {
     }
 }
 
-// export function getTasks(url, id) {
-//     return itemsFetchingData(url, user, GET_TASK_DATA, 'post')
-// }
+export function getTasks(id) {
+
+    return itemsFetchingDataFromGetRequest(API_GET_TASKS, GET_TASKS, 'get', id)
+}
+
+export function addTask(id, data) {
+    return itemsFetchingDataFromPostRequest(API_ADD_TASK, GET_TASK, 'post', id, data)
+}
