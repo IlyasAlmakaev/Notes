@@ -8,9 +8,15 @@ export default class EditNote extends Component {
 
 	}
 
-	onBtnGoClickHandler(e) {
+	onBtnCloseClickHandler(e) {
 		e.preventDefault();
+    let isClosed = window.confirm('Закрыть без сохранения?');
 
+    if (isClosed) {
+      console.log('clll');
+    } else {
+      console.log('notcll');
+    }
 	}
 
   render() {
@@ -37,7 +43,7 @@ export default class EditNote extends Component {
       </button>
       <button
               className='add__btn'
-              onClick={this.onBtnGoClickHandler}
+              onClick={this.onBtnCloseClickHandler}
               ref='alert_button'>
               Закрыть
       </button>
