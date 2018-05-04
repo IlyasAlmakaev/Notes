@@ -1,7 +1,7 @@
 import { GET_USER_ID, GET_ERROR } from "../constants/Task";
 
 const initialState = {
-    id: null,
+    id: '',
     error: ''
 }
 
