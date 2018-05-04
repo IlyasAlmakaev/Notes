@@ -135,11 +135,12 @@ class Notes extends Component {
   }
 
   componentDidMount() {
-		console.log("idd" + this.props.id);
+    console.log("idd" + this.props.id);
+    this.props.getTasksFromForm(this.props.id)
   }
 
   componentWillReceiveProps(props) {	
-		console.log("tsss " + props.tasks + "err" + props.error);
+    console.log("tsss " + props.tasks + "err" + props.error);
 	}
 
   onAddNoteBtnClickHandler(e) {
@@ -151,7 +152,7 @@ class Notes extends Component {
 		};
     // TODO: переправить на нужную страницу
     this.props.addTaskFromForm(this.props.id, data)
-   // this.props.getTasksFromForm(this.props.id)
+    
   //  this.props.history.push('/editNote');
 	}
 
