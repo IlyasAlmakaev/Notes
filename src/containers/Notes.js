@@ -109,7 +109,7 @@ class NotesList extends Component {
 class Notes extends Component {
 
   static propTypes = {
-    id: PropTypes.number
+    id: PropTypes.string
  }
 
   constructor(props) {
