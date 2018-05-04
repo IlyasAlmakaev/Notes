@@ -147,11 +147,11 @@ class Notes extends Component {
 
     let data = {
       title: 'teeesxxt',
-      id: this.props.id
+      body: "bodyTask"
 		};
     // TODO: переправить на нужную страницу
-  //  this.props.addTaskFromForm(this.props.id, data)
-    this.props.getTasksFromForm(this.props.id)
+    this.props.addTaskFromForm(this.props.id, data)
+   // this.props.getTasksFromForm(this.props.id)
   //  this.props.history.push('/editNote');
 	}
 

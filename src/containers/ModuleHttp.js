@@ -26,7 +26,7 @@ export const postRequest = (url, method, id, data) => {
 			method: method,  
 			headers: {
 				'Accept': 'application/json, text/plain, */*',
-				'Content-Type': 'text/plain',
+				'Content-Type': 'application/json',
 				'access_token': id
 			},  
 			body: data
