@@ -2,7 +2,7 @@ import { GET_USER_ID, GET_TASKS, GET_TASK, GET_ERROR, DELETE_TASK } from "../con
 
 const initialState = {
     id: '',
-    tasks: {},
+    tasks: [],
     task: {},
     deletedTask: {}, 
     error: ''

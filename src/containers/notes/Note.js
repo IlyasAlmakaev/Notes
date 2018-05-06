@@ -24,7 +24,7 @@ class Note extends Component {
         PropTypes.shape({
           title: PropTypes.string.isRequired,
           body: PropTypes.string.isRequired,
-          id: PropTypes.string.isRequired}),
+          id: PropTypes.number.isRequired}),
         PropTypes.arrayOf(PropTypes.shape({
           title: PropTypes.string.isRequired,
           body: PropTypes.string.isRequired,

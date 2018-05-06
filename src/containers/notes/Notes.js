@@ -58,7 +58,7 @@ class Notes extends Component {
     id: PropTypes.string,
     getTasksFromForm: PropTypes.func.isRequired,
     addTaskFromForm: PropTypes.func.isRequired,
-    tasks: PropTypes.object.isRequired,
+    tasks: PropTypes.array.isRequired,
     task: PropTypes.object.isRequired,
     error: PropTypes.string.isRequired
  }
