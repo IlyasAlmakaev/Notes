@@ -7,7 +7,8 @@ import { replaceTask } from './RequestHandle';
 const mapStateToProps = (state) => {
 	return {
     data: state.task.data,
-		error: state.task.error
+    error: state.task.error,
+    replacedTask: state.task.replacedTask
 	};
 };
 
@@ -34,6 +35,7 @@ class EditNote extends Component {
       })),
     ]).isRequired,
     replaceTaskFromForm: PropTypes.func.isRequired,
+    replacedTask: PropTypes.object.isRequired
  }
 
   constructor(props) {
@@ -42,13 +44,22 @@ this.state = {title: this.props.data.title,
     body: this.props.data.body,
     taskID: this.props.data.taskID,
     userID: this.props.data.userID};
-    this.onBtnClickHandler = this.onBtnClickHandler.bind(this);
+    this.onBtnEditClickHandler = this.onBtnEditClickHandler.bind(this);
+    this.onBtnCloseClickHandler = this.onBtnCloseClickHandler.bind(this);
 }
 
-  onBtnClickHandler(e) {
+componentWillReceiveProps(props) {	
+
+  if (props.replacedTask) {
+    this.props.history.push('/notes');
+  } else {
+    alert("Ошибка при редактировании заметки")
+}
+}
+
+  onBtnEditClickHandler(e) {
     e.preventDefault();
-    console.log("t" + this.refs.titleNote.value +
-  "b" + this.refs.bodyNote.value);
+
     let data = {
       title: this.refs.titleNote.value,
       body: this.refs.bodyNote.value
@@ -62,10 +73,8 @@ this.state = {title: this.props.data.title,
     let isClosed = window.confirm('Закрыть без сохранения?');
 
     if (isClosed) {
-      console.log('clll');
-    } else {
-      console.log('notcll');
-    }
+      this.props.history.push('/notes');
+    } 
 	}
 
   render() {
@@ -89,7 +98,7 @@ this.state = {title: this.props.data.title,
 			></textarea>
       <button
               className='add__btn'
-              onClick={this.onBtnClickHandler}
+              onClick={this.onBtnEditClickHandler}
               ref='alert_button'>
               Редактировать
       </button>
