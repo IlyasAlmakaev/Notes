@@ -32,6 +32,14 @@ class AddNote extends Component {
 		this.onBtnClickHandler = this.onBtnClickHandler.bind(this);  
     }
 
+    componentWillReceiveProps(props) {	
+		if (props.task) {
+			this.props.history.push('/notes');
+		} else {
+            alert("Ошибка при добавлении заметки")
+        }
+	}
+
     onBtnClickHandler(e) {
 		e.preventDefault();
 
