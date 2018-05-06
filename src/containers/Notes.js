@@ -36,9 +36,11 @@ class Note extends Component {
   static propTypes = {
     data: PropTypes.oneOfType([
       PropTypes.shape({
-        noteText: PropTypes.string.isRequired}),
+        title: PropTypes.string.isRequired,
+        body: PropTypes.string.isRequired}),
       PropTypes.arrayOf(PropTypes.shape({
-        noteText: PropTypes.string.isRequired
+        title: PropTypes.string.isRequired,
+        body: PropTypes.string.isRequired
       })),
     ]).isRequired
  }
@@ -49,7 +51,8 @@ class Note extends Component {
   
   constructor(props) {
 		super(props);
-		this.state = {noteText: this.props.data.noteText};
+    this.state = {title: this.props.data.title,
+        body: this.props.data.body};
 		this.onEditNoteBtnClickHandler = this.onEditNoteBtnClickHandler.bind(this);
 		this.onDeleteNoteBtnClickHandler = this.onDeleteNoteBtnClickHandler.bind(this);
 		this.onCheckComplite = this.onCheckComplite.bind(this);	  
@@ -73,7 +76,8 @@ class Note extends Component {
 
     return (
     <div className='note'>
-    <h3 onClick={this.onEditNoteBtnClickHandler}>{this.state.noteText}</h3>
+    <h3 onClick={this.onEditNoteBtnClickHandler}>{this.state.title}</h3>
+    <h3 onClick={this.onEditNoteBtnClickHandler}>{this.state.body}</h3>
     <label className='add__checkrule'>
         <input type='checkbox' ref='checkrule' onChange={this.onCheckComplite} />Выполнено
     </label>
@@ -161,7 +165,7 @@ class Notes extends Component {
     return (
       <form className='notes'>
         <h1>Заметки</h1>
-        <NotesList data={notesComponents} history={self.props.history} />
+        <NotesList data={self.props.tasks} history={self.props.history} />
         <button
           className='add__btn'
           onClick={this.onAddNoteBtnClickHandler}
