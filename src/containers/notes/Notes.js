@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getTasks, addTask } from '../RequestHandle';
+import { getTasks, setUserID } from '../RequestHandle';
 import Note from './Note'
 
 const mapStateToProps = (state) => {
@@ -16,7 +16,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
 	return {
     getTasksFromForm: (id) => dispatch(getTasks(id)),
-    addTaskFromForm: (id, data) => dispatch(addTask(id, data))
+    setUserIDFromForm: (id) => dispatch(setUserID(id))
 	};
 };
 
@@ -57,7 +57,7 @@ class Notes extends Component {
   static propTypes = {
     id: PropTypes.string,
     getTasksFromForm: PropTypes.func.isRequired,
-    addTaskFromForm: PropTypes.func.isRequired,
+    setUserID: PropTypes.func,
     tasks: PropTypes.array.isRequired,
     task: PropTypes.object.isRequired,
     error: PropTypes.string.isRequired
@@ -79,15 +79,9 @@ class Notes extends Component {
 
   onAddNoteBtnClickHandler(e) {
     e.preventDefault();
-
-    let data = {
-      title: 'teeesxxt',
-      body: "bodyTask"
-		};
-    // TODO: переправить на нужную страницу
-    this.props.addTaskFromForm(this.props.id, data)
     
-  //  this.props.history.push('/editNote');
+    this.props.setUserIDFromForm(this.props.id);
+    this.props.history.push('/addNote');
 	}
 
   render() {
