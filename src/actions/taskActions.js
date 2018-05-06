@@ -1,4 +1,4 @@
-import { GET_USER_ID, GET_ERROR, GET_TASKS, GET_TASK, API_DELETE_TASK  } from "../constants/Task";
+import { GET_USER_ID, GET_ERROR, GET_TASKS, GET_TASK, REPLACE_TASK, SET_TASK  } from "../constants/Task";
 
 export function getID(id) {
     return(dispatch) => {
@@ -32,6 +32,24 @@ export function deleteTask(deletedTask) {
         dispatch({
             type: DELETE_TASK,
             payload: deletedTask
+        })
+    }
+}
+
+export function replaceTask(replacedTask) {
+    return(dispatch) => {
+        dispatch({
+            type: REPLACE_TASK,
+            payload: replacedTask
+        })
+    }
+}
+
+export function setTask(taskData) {
+    return(dispatch) => {
+        dispatch({
+            type: SET_TASK,
+            payload: taskData
         })
     }
 }

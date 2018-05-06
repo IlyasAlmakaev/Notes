@@ -79,7 +79,7 @@ class AuthorizeTemplate extends Component {
 
   render() {
 
-    var emailIsEmpty = this.state.emailIsEmpty,
+    let emailIsEmpty = this.state.emailIsEmpty,
       passwordIsEmpty = this.state.passwordIsEmpty;
 
     return (

@@ -1,6 +1,6 @@
 import { request, getRequest, postRequest } from "./ModuleHttp";
 import { GET_USER_DATA, GET_ERROR } from "../constants/User";
-import { GET_TASKS, GET_USER_ID, GET_TASK, API_GET_TASKS, API_ADD_TASK, API_DELETE_TASK, DELETE_TASK } from "../constants/Task";
+import { GET_TASKS, SET_USER_ID, GET_TASK, API_GET_TASKS, API_ADD_TASK, API_DELETE_TASK, DELETE_TASK, API_REPLACE_TASK, REPLACE_TASK, SET_TASK } from "../constants/Task";
 
 export function itemsFetchingData(url, user, type, method) {
     return (dispatch) => {
@@ -53,7 +53,7 @@ export function authorizeRequest(url, user) {
 
 export function setUserID(id) {
     return (dispatch) => {
-        dispatch({ type: GET_USER_ID, payload: id })
+        dispatch({ type: SET_USER_ID, payload: id })
     }
 }
 
@@ -70,3 +70,14 @@ export function deleteTask(id, taskID) {
     let url = API_DELETE_TASK + '/' + taskID
     return itemsFetchingDataFromGetRequest(url, DELETE_TASK, 'delete', id)
 } 
+
+export function setTask(taskData) {
+    return (dispatch) => {
+        dispatch({ type: SET_TASK, payload: taskData })
+    }
+}
+
+export function replaceTask(id, taskID, data) {
+    let url = API_DELETE_TASK + '/' + taskID
+    return itemsFetchingDataFromPostRequest(url, REPLACE_TASK, 'post', id, data)
+}

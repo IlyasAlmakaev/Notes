@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteTask } from '../RequestHandle';
+import { deleteTask, setTask } from '../RequestHandle';
 
 const mapStateToProps = (state) => {
 	return {
@@ -13,7 +13,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-    deleteTaskFromForm: (id, taskID) => dispatch(deleteTask(id, taskID))
+    deleteTaskFromForm: (id, taskID) => dispatch(deleteTask(id, taskID)),
+    setTaskFromForm: (editedTask) => dispatch(setTask(editedTask))
 	};
 };
 
@@ -32,7 +33,8 @@ class Note extends Component {
         })),
       ]).isRequired,
       id: PropTypes.string,
-      deleteTaskFromForm: PropTypes.func.isRequired
+      deleteTaskFromForm: PropTypes.func.isRequired,
+      setTaskFromForm: PropTypes.func.isRequired,
    }
   
     static defaultProps = {
@@ -51,6 +53,7 @@ class Note extends Component {
   
     onEditNoteBtnClickHandler(e) {
         e.preventDefault();
+        this.props.setTaskFromForm(this.state);
         this.props.history.push('/editNote');
     }
   
