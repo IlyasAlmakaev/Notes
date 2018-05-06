@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteTask, getTasks, setEditTaskData } from '../RequestHandle';
+import { deleteTask, getTasks, setEditTaskData, replaceTask } from '../RequestHandle';
 import { Notes } from './Notes';
 
 const mapStateToProps = (state) => {
@@ -9,6 +9,7 @@ const mapStateToProps = (state) => {
         id: state.task.id,
         task: state.task.task,
         deletedTask: state.task.deletedTask,
+        replacedTask: state.task.replacedTask,
 	    error: state.task.error
 	};
 };
@@ -17,7 +18,8 @@ const mapDispatchToProps = (dispatch) => {
 	return {
         getTasksFromForm: (id) => dispatch(getTasks(id)),
         deleteTaskFromForm: (id, taskID) => dispatch(deleteTask(id, taskID)),
-        setEditTaskDataFromForm: (data) => dispatch(setEditTaskData(data))
+        setEditTaskDataFromForm: (data) => dispatch(setEditTaskData(data)),
+        replaceTaskFromForm: (id, taskID, data) => dispatch(replaceTask(id, taskID, data))
 	};
 };
 
@@ -28,11 +30,13 @@ class Note extends Component {
         PropTypes.shape({
           title: PropTypes.string.isRequired,
           body: PropTypes.string.isRequired,
-          id: PropTypes.number.isRequired}),
+          id: PropTypes.number.isRequired,
+        done: PropTypes.bool.isRequired}),
         PropTypes.arrayOf(PropTypes.shape({
           title: PropTypes.string.isRequired,
           body: PropTypes.string.isRequired,
-          id: PropTypes.number.isRequired
+          id: PropTypes.number.isRequired,
+          done: PropTypes.bool.isRequired
         })),
       ]).isRequired,
       id: PropTypes.string,
@@ -40,6 +44,7 @@ class Note extends Component {
       deleteTaskFromForm: PropTypes.func.isRequired,
       getTasksFromForm: PropTypes.func.isRequired,
       setEditTaskData: PropTypes.func,
+      replaceTaskFromForm: PropTypes.func.isRequired
    }
   
     static defaultProps = {
@@ -50,7 +55,8 @@ class Note extends Component {
           super(props);
       this.state = {title: this.props.data.title,
           body: this.props.data.body,
-          id: this.props.data.id};
+          id: this.props.data.id,
+          done: this.props.data.done};
           this.onEditNoteBtnClickHandler = this.onEditNoteBtnClickHandler.bind(this);
           this.onDeleteNoteBtnClickHandler = this.onDeleteNoteBtnClickHandler.bind(this);
           this.onCheckComplite = this.onCheckComplite.bind(this);
@@ -63,7 +69,7 @@ class Note extends Component {
                 title: this.state.title,
                 body: this.state.body,
                 taskID: this.state.id,
-                userID: this.props.id     
+                userID: this.props.id   
         };
         
         this.props.setEditTaskDataFromForm(data);
@@ -79,8 +85,12 @@ class Note extends Component {
   
     }
     onCheckComplite(e) {
-      //	e.preventDefault();
-  
+
+        let data = { title: this.state.title,
+            body: this.state.body,
+            done: e.target.checked};
+
+        this.props.replaceTaskFromForm(this.props.id, this.state.id, data)
     }
   
     render() {
@@ -90,7 +100,7 @@ class Note extends Component {
       <h3 onClick={this.onEditNoteBtnClickHandler}>{this.state.title}</h3>
       <h3 onClick={this.onEditNoteBtnClickHandler}>{this.state.body}</h3>
       <label className='add__checkrule'>
-          <input type='checkbox' ref='checkrule' onChange={this.onCheckComplite} />Выполнено
+          <input type='checkbox' ref='checkrule' onChange={this.onCheckComplite } defaultChecked={this.state.done} />Выполнено
       </label>
       <button
         className='add__btn'

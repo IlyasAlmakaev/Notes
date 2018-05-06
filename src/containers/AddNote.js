@@ -29,7 +29,8 @@ class AddNote extends Component {
 
     constructor(props) {
 		super(props);
-		this.onBtnClickHandler = this.onBtnClickHandler.bind(this);  
+        this.onBtnClickHandler = this.onBtnClickHandler.bind(this);  
+        this.onBtnCloseClickHandler = this.onBtnCloseClickHandler.bind(this);
     }
 
     componentWillReceiveProps(props) {	
@@ -56,10 +57,8 @@ class AddNote extends Component {
     let isClosed = window.confirm('Закрыть без сохранения?');
 
     if (isClosed) {
-      console.log('clll');
-    } else {
-      console.log('notcll');
-    }
+        this.props.history.push('/notes');
+    } 
 	}
 
   render() {
