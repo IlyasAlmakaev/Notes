@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { deleteTask } from '../RequestHandle';
+import { deleteTask, getTasks, setEditTaskData } from '../RequestHandle';
+import { Notes } from './Notes';
 
 const mapStateToProps = (state) => {
 	return {
         id: state.task.id,
         task: state.task.task,
+        deletedTask: state.task.deletedTask,
 	    error: state.task.error
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-    deleteTaskFromForm: (id, taskID) => dispatch(deleteTask(id, taskID))
+        getTasksFromForm: (id) => dispatch(getTasks(id)),
+        deleteTaskFromForm: (id, taskID) => dispatch(deleteTask(id, taskID)),
+        setEditTaskDataFromForm: (data) => dispatch(setEditTaskData(data))
 	};
 };
 
@@ -28,11 +32,14 @@ class Note extends Component {
         PropTypes.arrayOf(PropTypes.shape({
           title: PropTypes.string.isRequired,
           body: PropTypes.string.isRequired,
-          id: PropTypes.string.isRequired
+          id: PropTypes.number.isRequired
         })),
       ]).isRequired,
       id: PropTypes.string,
-      deleteTaskFromForm: PropTypes.func.isRequired
+      deletedTask: PropTypes.object.isRequired,
+      deleteTaskFromForm: PropTypes.func.isRequired,
+      getTasksFromForm: PropTypes.func.isRequired,
+      setEditTaskData: PropTypes.func,
    }
   
     static defaultProps = {
@@ -46,18 +53,29 @@ class Note extends Component {
           id: this.props.data.id};
           this.onEditNoteBtnClickHandler = this.onEditNoteBtnClickHandler.bind(this);
           this.onDeleteNoteBtnClickHandler = this.onDeleteNoteBtnClickHandler.bind(this);
-          this.onCheckComplite = this.onCheckComplite.bind(this);	  
+          this.onCheckComplite = this.onCheckComplite.bind(this);
     }
   
     onEditNoteBtnClickHandler(e) {
         e.preventDefault();
+
+        let data = {
+                title: this.state.title,
+                body: this.state.body,
+                taskID: this.state.id,
+                userID: this.props.id     
+        };
+        
+        this.props.setEditTaskDataFromForm(data);
         this.props.history.push('/editNote');
     }
   
     onDeleteNoteBtnClickHandler(e) {
       e.preventDefault();
   
-      this.props.deleteTaskFromForm(this.props.id, this.state.id)
+      this.props.deleteTaskFromForm(this.props.id, this.state.id);
+      //TODO: возможно, удалить данный метод \/
+ //    this.props.getTasksFromForm(this.props.id);
   
     }
     onCheckComplite(e) {

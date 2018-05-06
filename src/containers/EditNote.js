@@ -1,7 +1,45 @@
 import React, { Component } from 'react';
-import {request} from './ModuleHttp';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { request } from './ModuleHttp';
 
-export default class EditNote extends Component {
+const mapStateToProps = (state) => {
+	return {
+    data: state.task.data,
+		error: state.task.error
+	};
+};
+
+const mapDispatchToProps = (dispatch) => {
+	return {
+	};
+};
+
+class EditNote extends Component {
+
+  static propTypes = {
+    data: PropTypes.oneOfType([
+      PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        body: PropTypes.string.isRequired,
+        taskID: PropTypes.number.isRequired,
+        userID: PropTypes.string.isRequired}),
+      PropTypes.arrayOf(PropTypes.shape({
+        title: PropTypes.string.isRequired,
+        body: PropTypes.string.isRequired,
+        taskID: PropTypes.number.isRequired,
+        userID: PropTypes.string.isRequired
+      })),
+    ]).isRequired
+ }
+
+  constructor(props) {
+    super(props);
+this.state = {title: this.props.data.title,
+    body: this.props.data.body,
+    taskID: this.props.data.taskID,
+    userID: this.props.data.userID};
+}
 
   onBtnClickHandler(e) {
 		e.preventDefault();
@@ -21,6 +59,8 @@ export default class EditNote extends Component {
 
   render() {
 
+    let self = this;
+
     return (
       <form className='add cf'>
       <input
@@ -28,12 +68,13 @@ export default class EditNote extends Component {
         className='email'
         placeholder='Заголовок'
         ref='email'
-       // value={this.state.value}
+        defaultValue={self.state.title}
       />
       <textarea
 						className='email'
 						placeholder='Содержимое заметки'
-						ref='text'
+            ref='text'
+            defaultValue={self.state.body}
 			></textarea>
       <button
               className='add__btn'
@@ -51,3 +92,5 @@ export default class EditNote extends Component {
     );
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditNote);

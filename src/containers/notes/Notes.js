@@ -69,8 +69,12 @@ class Notes extends Component {
   }
 
   componentDidMount() {
+    this.getTasksComponents();
+  }
+
+  getTasksComponents() {
     console.log("idd" + this.props.id);
-    this.props.getTasksFromForm(this.props.id)
+    this.props.getTasksFromForm(this.props.id);
   }
 
   componentWillReceiveProps(props) {	
