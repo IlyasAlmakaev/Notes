@@ -1,9 +1,10 @@
-import { GET_USER_ID, GET_TASKS, GET_TASK, GET_ERROR } from "../constants/Task";
+import { GET_USER_ID, GET_TASKS, GET_TASK, GET_ERROR, DELETE_TASK } from "../constants/Task";
 
 const initialState = {
     id: '',
     tasks: {},
-    task: {}, 
+    task: {},
+    deletedTask: {}, 
     error: ''
 }
 
@@ -15,7 +16,9 @@ export function task(state = initialState, action) {
         case GET_TASKS:
             return { ...state, tasks: action.payload }
         case GET_TASK:
-            return { ...state, task: action.payload }      
+            return { ...state, task: action.payload }
+        case DELETE_TASK:
+            return { ...state, deletedTask: action.payload }       
         case GET_ERROR:
             return { ...state, error: action.payload }     
         

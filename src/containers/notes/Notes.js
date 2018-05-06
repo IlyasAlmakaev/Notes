@@ -1,19 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getTasks, addTask } from './RequestHandle';
-
-let notesComponents = [
-	{
-		noteText: 'Саша Печкин'
-	},
-	{
-		noteText: 'Просто Вася'
-	},
-	{
-		noteText: 'Гость'
-	}
-]
+import { getTasks, addTask } from '../RequestHandle';
+import Note from './Note'
 
 const mapStateToProps = (state) => {
 	return {
@@ -31,65 +20,6 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-class Note extends Component {
-
-  static propTypes = {
-    data: PropTypes.oneOfType([
-      PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        body: PropTypes.string.isRequired}),
-      PropTypes.arrayOf(PropTypes.shape({
-        title: PropTypes.string.isRequired,
-        body: PropTypes.string.isRequired
-      })),
-    ]).isRequired
- }
-
-  static defaultProps = {
-    data: []
-  }
-  
-  constructor(props) {
-		super(props);
-    this.state = {title: this.props.data.title,
-        body: this.props.data.body};
-		this.onEditNoteBtnClickHandler = this.onEditNoteBtnClickHandler.bind(this);
-		this.onDeleteNoteBtnClickHandler = this.onDeleteNoteBtnClickHandler.bind(this);
-		this.onCheckComplite = this.onCheckComplite.bind(this);	  
-  }
-
-  onEditNoteBtnClickHandler(e) {
-		e.preventDefault();
-    this.props.history.push('/editNote');
-  }
-
-  onDeleteNoteBtnClickHandler(e) {
-		e.preventDefault();
-
-  }
-  onCheckComplite(e) {
-	//	e.preventDefault();
-
-  }
-
-  render() {
-
-    return (
-    <div className='note'>
-    <h3 onClick={this.onEditNoteBtnClickHandler}>{this.state.title}</h3>
-    <h3 onClick={this.onEditNoteBtnClickHandler}>{this.state.body}</h3>
-    <label className='add__checkrule'>
-        <input type='checkbox' ref='checkrule' onChange={this.onCheckComplite} />Выполнено
-    </label>
-    <button
-      className='add__btn'
-      onClick={this.onDeleteNoteBtnClickHandler}
-      ref='alert_button'>
-      Удалить заметку
-    </button>
-    </div>)
-  }
-}
 
 class NotesList extends Component {
 

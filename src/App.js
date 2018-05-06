@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Switch, Route} from 'react-router-dom';
 import Registration from './components/Registration.js'
 import Authorization from './components/Authorization.js'
-import Notes from './containers/Notes.js'
+import Notes from './containers/notes/Notes.js'
 import EditNote from './containers/EditNote.js'
 import './App.css';
 

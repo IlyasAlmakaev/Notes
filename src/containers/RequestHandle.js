@@ -1,6 +1,6 @@
 import { request, getRequest, postRequest } from "./ModuleHttp";
 import { GET_USER_DATA, GET_ERROR } from "../constants/User";
-import { GET_TASKS, GET_USER_ID, GET_TASK, API_GET_TASKS, API_ADD_TASK } from "../constants/Task";
+import { GET_TASKS, GET_USER_ID, GET_TASK, API_GET_TASKS, API_ADD_TASK, API_DELETE_TASK, DELETE_TASK } from "../constants/Task";
 
 export function itemsFetchingData(url, user, type, method) {
     return (dispatch) => {
@@ -65,3 +65,8 @@ export function getTasks(id) {
 export function addTask(id, data) {
     return itemsFetchingDataFromPostRequest(API_ADD_TASK, GET_TASK, 'post', id, data)
 }
+
+export function deleteTask(id, taskID) {
+    let url = API_DELETE_TASK + '/' + taskID
+    return itemsFetchingDataFromGetRequest(url, DELETE_TASK, 'delete', id)
+} 
