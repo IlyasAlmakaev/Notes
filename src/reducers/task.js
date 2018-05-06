@@ -1,11 +1,12 @@
 import { GET_USER_ID, GET_TASKS, GET_TASK, GET_ERROR, DELETE_TASK,
-    GET_EDIT_TASK_DATA } from "../constants/Task";
+    GET_EDIT_TASK_DATA, REPLACE_TASK } from "../constants/Task";
 
 const initialState = {
     id: '',
     tasks: [],
     task: {},
     deletedTask: {}, 
+    replacedTask: {}, 
     error: '',
     data: []
 }
@@ -21,6 +22,8 @@ export function task(state = initialState, action) {
             return { ...state, tasks: action.payload }
         case GET_TASK:
             return { ...state, task: action.payload }
+        case REPLACE_TASK:
+            return { ...state, replacedTask: action.payload }     
         case DELETE_TASK:
             return { ...state, deletedTask: action.payload }       
         case GET_ERROR:

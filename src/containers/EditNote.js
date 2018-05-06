@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { request } from './ModuleHttp';
+import { replaceTask } from './RequestHandle';
 
 const mapStateToProps = (state) => {
 	return {
@@ -12,6 +13,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
+    replaceTaskFromForm: (id, taskID, data) => dispatch(replaceTask(id, taskID, data))
 	};
 };
 
@@ -30,7 +32,8 @@ class EditNote extends Component {
         taskID: PropTypes.number.isRequired,
         userID: PropTypes.string.isRequired
       })),
-    ]).isRequired
+    ]).isRequired,
+    replaceTaskFromForm: PropTypes.func.isRequired,
  }
 
   constructor(props) {
@@ -39,11 +42,19 @@ this.state = {title: this.props.data.title,
     body: this.props.data.body,
     taskID: this.props.data.taskID,
     userID: this.props.data.userID};
+    this.onBtnClickHandler = this.onBtnClickHandler.bind(this);
 }
 
   onBtnClickHandler(e) {
-		e.preventDefault();
+    e.preventDefault();
+    console.log("t" + this.refs.titleNote.value +
+  "b" + this.refs.bodyNote.value);
+    let data = {
+      title: this.refs.titleNote.value,
+      body: this.refs.bodyNote.value
+        };
 
+    this.props.replaceTaskFromForm(this.state.userID, this.state.taskID, data)
 	}
 
 	onBtnCloseClickHandler(e) {
@@ -67,13 +78,13 @@ this.state = {title: this.props.data.title,
         type='text'
         className='email'
         placeholder='Заголовок'
-        ref='email'
+        ref='titleNote'
         defaultValue={self.state.title}
       />
       <textarea
 						className='email'
 						placeholder='Содержимое заметки'
-            ref='text'
+            ref='bodyNote'
             defaultValue={self.state.body}
 			></textarea>
       <button

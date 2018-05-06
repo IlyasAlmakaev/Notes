@@ -1,5 +1,5 @@
 import { GET_USER_ID, GET_ERROR, GET_TASKS, GET_TASK, API_DELETE_TASK,
-    GET_EDIT_TASK_DATA  } from "../constants/Task";
+    GET_EDIT_TASK_DATA, REPLACE_TASK  } from "../constants/Task";
 
 export function getID(id) {
     return(dispatch) => {
@@ -33,6 +33,15 @@ export function addTask(task) {
         dispatch({
             type: GET_TASK,
             payload: task
+        })
+    }
+}
+
+export function replaceTask(replacedTask) {
+    return(dispatch) => {
+        dispatch({
+            type: REPLACE_TASK,
+            payload: replacedTask
         })
     }
 }

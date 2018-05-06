@@ -2,7 +2,7 @@ import { request, getRequest, postRequest } from "./ModuleHttp";
 import { GET_USER_DATA, GET_ERROR } from "../constants/User";
 import { GET_TASKS, GET_USER_ID, GET_TASK, API_GET_TASKS, 
     API_ADD_TASK, API_DELETE_TASK, DELETE_TASK,
-    GET_EDIT_TASK_DATA } from "../constants/Task";
+    GET_EDIT_TASK_DATA, API_REPLACE_TASK, REPLACE_TASK } from "../constants/Task";
 
 export function itemsFetchingData(url, user, type, method) {
     return (dispatch) => {
@@ -72,6 +72,11 @@ export function getTasks(id) {
 
 export function addTask(id, data) {
     return itemsFetchingDataFromPostRequest(API_ADD_TASK, GET_TASK, 'post', id, data)
+}
+
+export function replaceTask(id, taskID, data) {
+    let url = API_REPLACE_TASK + `/${taskID}/replace`
+    return itemsFetchingDataFromPostRequest(url, REPLACE_TASK, 'post', id, data)
 }
 
 export function deleteTask(id, taskID) {
