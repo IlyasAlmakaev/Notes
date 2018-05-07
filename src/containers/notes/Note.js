@@ -53,10 +53,10 @@ class Note extends Component {
     
     constructor(props) {
           super(props);
-      this.state = {title: this.props.data.title,
-          body: this.props.data.body,
-          id: this.props.data.id,
-          done: this.props.data.done};
+      // this.state = {title: this.props.data.title,
+      //     body: this.props.data.body,
+      //     id: this.props.data.id,
+      //     done: this.props.data.done};
           this.onEditNoteBtnClickHandler = this.onEditNoteBtnClickHandler.bind(this);
           this.onDeleteNoteBtnClickHandler = this.onDeleteNoteBtnClickHandler.bind(this);
           this.onCheckComplite = this.onCheckComplite.bind(this);
@@ -66,9 +66,9 @@ class Note extends Component {
         e.preventDefault();
 
         let data = {
-                title: this.state.title,
-                body: this.state.body,
-                taskID: this.state.id,
+                title: this.props.data.title,
+                body: this.props.data.body,
+                taskID: this.props.data.id,
                 userID: this.props.id   
         };
         
@@ -79,28 +79,28 @@ class Note extends Component {
     onDeleteNoteBtnClickHandler(e) {
       e.preventDefault();
   
-      this.props.deleteTaskFromForm(this.props.id, this.state.id);
+      this.props.deleteTaskFromForm(this.props.id, this.props.data.id);
       //TODO: возможно, удалить данный метод \/
  //    this.props.getTasksFromForm(this.props.id);
   
     }
     onCheckComplite(e) {
 
-        let data = { title: this.state.title,
-            body: this.state.body,
+        let data = { title: this.props.data.title,
+            body: this.props.data.body,
             done: e.target.checked};
 
-        this.props.replaceTaskFromForm(this.props.id, this.state.id, data)
+        this.props.replaceTaskFromForm(this.props.id, this.props.data.id, data)
     }
   
     render() {
   
       return (
       <div className='note'>
-      <h3 onClick={this.onEditNoteBtnClickHandler}>{this.state.title}</h3>
-      <h3 onClick={this.onEditNoteBtnClickHandler}>{this.state.body}</h3>
+      <h3 onClick={this.onEditNoteBtnClickHandler}>{this.props.data.title}</h3>
+      <h3 onClick={this.onEditNoteBtnClickHandler}>{this.props.data.body}</h3>
       <label className='add__checkrule'>
-          <input type='checkbox' ref='checkrule' onChange={this.onCheckComplite } defaultChecked={this.state.done} />Выполнено
+          <input type='checkbox' ref='checkrule' onChange={this.onCheckComplite } defaultChecked={this.props.data.done} />Выполнено
       </label>
       <button
         className='add__btn'

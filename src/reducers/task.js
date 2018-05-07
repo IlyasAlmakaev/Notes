@@ -25,7 +25,7 @@ export function task(state = initialState, action) {
         case REPLACE_TASK:
             return { ...state, replacedTask: action.payload }     
         case DELETE_TASK:
-            return { ...state, deletedTask: action.payload }       
+            return { ...state, tasks: state.tasks.filter(item => item.id !== action.payload) }       
         case GET_ERROR:
             return { ...state, error: action.payload }     
         

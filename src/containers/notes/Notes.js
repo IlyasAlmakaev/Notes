@@ -37,7 +37,7 @@ class NotesList extends Component {
 			notesTemplate = data.map(function(item, index) {
 				return (
 					<div key={index}>
-						<Note data={item} history={self.props.history}/>
+						<Note data={item} history={self.props.history} index={index}/>
 					</div>
 				)
 			})

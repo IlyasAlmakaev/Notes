@@ -1,6 +1,7 @@
+const BASE_URL = 'http://localhost:3000/'
 
 export const request = (url, data, method) => {
-    return fetch(url, {  
+    return fetch(BASE_URL + url, {  
 			method: method,  
 			headers: {
 				'Accept': 'application/json, text/plain, */*',
@@ -11,7 +12,7 @@ export const request = (url, data, method) => {
 }
 
 export const getRequest = (url, method, id) => {
-    return fetch(url, {  
+    return fetch(BASE_URL + url, {  
 			method: method,  
 			headers: {
 				'Accept': 'application/json, text/plain, */*',
@@ -22,7 +23,7 @@ export const getRequest = (url, method, id) => {
 }
 
 export const postRequest = (url, method, id, data) => {
-    return fetch(url, {  
+    return fetch(BASE_URL + url, {  
 			method: method,  
 			headers: {
 				'Accept': 'application/json, text/plain, */*',

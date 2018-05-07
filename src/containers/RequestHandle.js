@@ -34,6 +34,21 @@ export function itemsFetchingDataFromGetRequest(url, type, method, id) {
     }
 }
 
+export function itemsFetchingDataFromGetRequestForDelete(url, type, method, id, taskID) {
+    return (dispatch) => {
+        getRequest(url, method, id).then((res) => {
+			if (res.status !== 200 && !res.ok) {
+                throw Error(res.statusText);
+            } 
+				
+			return res;
+        })
+        .then((res) => res.json())
+        .then(dispatch({ type: type, payload: taskID }))
+        .catch((error) => dispatch({ type: GET_ERROR, payload: error.message }));
+    }
+}
+
 export function itemsFetchingDataFromPostRequest(url, type, method, id, data) {
     return (dispatch) => {
         postRequest(url, method, id, JSON.stringify(data)).then((res) => {
@@ -81,5 +96,5 @@ export function replaceTask(id, taskID, data) {
 
 export function deleteTask(id, taskID) {
     let url = API_DELETE_TASK + '/' + taskID
-    return itemsFetchingDataFromGetRequest(url, DELETE_TASK, 'delete', id)
+    return itemsFetchingDataFromGetRequestForDelete(url, DELETE_TASK, 'delete', id, taskID)
 } 
