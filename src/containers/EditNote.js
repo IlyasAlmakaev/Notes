@@ -44,15 +44,6 @@ class EditNote extends Component {
     this.onBtnCloseClickHandler = this.onBtnCloseClickHandler.bind(this);
 }
 
-componentWillReceiveProps(props) {	
-
-  if (props.replacedTask) {
-    this.props.history.push('/notes');
-  } else {
-    alert("Ошибка при редактировании заметки")
-  }
-}
-
   onBtnEditClickHandler(e) {
     e.preventDefault();
 
@@ -62,6 +53,7 @@ componentWillReceiveProps(props) {
       };
 
     this.props.replaceTaskFromForm(this.props.data.userID, this.props.data.taskID, data)
+    this.props.history.push('/notes');
 	}
 
 	onBtnCloseClickHandler(e) {

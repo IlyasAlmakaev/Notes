@@ -23,7 +23,13 @@ export function task(state = initialState, action) {
         case GET_TASK:
             return { ...state, task: action.payload }
         case REPLACE_TASK:
-            return { ...state, replacedTask: action.payload }     
+            return { ...state, tasks: state.tasks.map(task => {
+                if (task.id === action.payload.id) {
+                    return action.payload;
+                }
+
+                return task;
+            }) }     
         case DELETE_TASK:
             return { ...state, tasks: state.tasks.filter(item => item.id !== action.payload) }       
         case GET_ERROR:
