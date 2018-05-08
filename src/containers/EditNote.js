@@ -40,10 +40,6 @@ class EditNote extends Component {
 
   constructor(props) {
     super(props);
-this.state = {title: this.props.data.title,
-    body: this.props.data.body,
-    taskID: this.props.data.taskID,
-    userID: this.props.data.userID};
     this.onBtnEditClickHandler = this.onBtnEditClickHandler.bind(this);
     this.onBtnCloseClickHandler = this.onBtnCloseClickHandler.bind(this);
 }
@@ -54,7 +50,7 @@ componentWillReceiveProps(props) {
     this.props.history.push('/notes');
   } else {
     alert("Ошибка при редактировании заметки")
-}
+  }
 }
 
   onBtnEditClickHandler(e) {
@@ -63,9 +59,9 @@ componentWillReceiveProps(props) {
     let data = {
       title: this.refs.titleNote.value,
       body: this.refs.bodyNote.value
-        };
+      };
 
-    this.props.replaceTaskFromForm(this.state.userID, this.state.taskID, data)
+    this.props.replaceTaskFromForm(this.props.data.userID, this.props.data.taskID, data)
 	}
 
 	onBtnCloseClickHandler(e) {
@@ -88,13 +84,13 @@ componentWillReceiveProps(props) {
         className='email'
         placeholder='Заголовок'
         ref='titleNote'
-        defaultValue={self.state.title}
+        defaultValue={self.props.data.title}
       />
       <textarea
 						className='email'
 						placeholder='Содержимое заметки'
             ref='bodyNote'
-            defaultValue={self.state.body}
+            defaultValue={self.props.data.body}
 			></textarea>
       <button
               className='add__btn'
