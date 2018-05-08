@@ -1,11 +1,20 @@
 import { GET_USER_ID, GET_ERROR, GET_TASKS, GET_TASK, API_DELETE_TASK,
-    GET_EDIT_TASK_DATA, REPLACE_TASK  } from "../constants/Task";
+    GET_EDIT_TASK_DATA, REPLACE_TASK, SET_TITLE  } from "../constants/Task";
 
 export function getID(id) {
     return(dispatch) => {
         dispatch({
             type: GET_USER_ID,
             payload: id
+        })
+    }
+}
+
+export function setTitle(title) {
+    return(dispatch) => {
+        dispatch({
+            type: SET_TITLE,
+            payload: title
         })
     }
 }

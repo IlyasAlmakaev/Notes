@@ -2,19 +2,21 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { request } from './ModuleHttp';
-import { replaceTask } from './RequestHandle';
+import { replaceTask, setTitle } from './RequestHandle';
 
 const mapStateToProps = (state) => {
 	return {
     data: state.task.data,
     error: state.task.error,
-    replacedTask: state.task.replacedTask
+    replacedTask: state.task.replacedTask,
+    title: state.task.title
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-    replaceTaskFromForm: (id, taskID, data) => dispatch(replaceTask(id, taskID, data))
+    replaceTaskFromForm: (id, taskID, data) => dispatch(replaceTask(id, taskID, data)),
+    setTitle: (title) => dispatch(setTitle(title))
 	};
 };
 
@@ -35,13 +37,16 @@ class EditNote extends Component {
       })),
     ]).isRequired,
     replaceTaskFromForm: PropTypes.func.isRequired,
-    replacedTask: PropTypes.object.isRequired
+    replacedTask: PropTypes.object.isRequired,
+    setTitle: PropTypes.func,
+    title: PropTypes.string.isRequired
  }
 
   constructor(props) {
     super(props);
     this.onBtnEditClickHandler = this.onBtnEditClickHandler.bind(this);
     this.onBtnCloseClickHandler = this.onBtnCloseClickHandler.bind(this);
+    this.onTitleFieldChange = this.onTitleFieldChange.bind(this);
 }
 
   onBtnEditClickHandler(e) {
@@ -63,6 +68,10 @@ class EditNote extends Component {
     if (isClosed) {
       this.props.history.push('/notes');
     } 
+  }
+  
+  onTitleFieldChange(e) {
+    this.props.setTitle(e.target.value.trim());
 	}
 
   render() {
@@ -74,6 +83,7 @@ class EditNote extends Component {
       <input
         type='text'
         className='email'
+        onChange={self.onTitleFieldChange}
         placeholder='Заголовок'
         ref='titleNote'
         defaultValue={self.props.data.title}
