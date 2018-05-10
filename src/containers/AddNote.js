@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { ActionCreators as UndoActionCreators } from 'redux-undo'
 import { connect } from 'react-redux';
 import { request } from './ModuleHttp';
 import { addTask } from './RequestHandle';
@@ -8,13 +9,17 @@ const mapStateToProps = (state) => {
 	return {
         id: state.task.present.id,
         task: state.task.present.task,
-		error: state.task.present.error
+        error: state.task.present.error,
+        canUndo: state.task.past.length > 0,
+        canRedo: state.task.future.length > 0
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-    addTaskFromForm: (id, data) => dispatch(addTask(id, data))
+        addTaskFromForm: (id, data) => dispatch(addTask(id, data)),
+        onUndo: () => dispatch(UndoActionCreators.undo()),
+        onRedo: () => dispatch(UndoActionCreators.redo())
 	};
 };
 
@@ -88,6 +93,18 @@ class AddNote extends Component {
               onClick={this.onBtnCloseClickHandler}
               ref='alert_button'>
               Закрыть
+      </button>
+      <button
+              className='add__btn'
+              onClick={this.onUndo}
+              ref='alert_button'>
+              Отменить
+      </button>
+      <button
+              className='add__btn'
+              onClick={this.onRedo}
+              ref='alert_button'>
+              Повторить
       </button>
     </form>
     );

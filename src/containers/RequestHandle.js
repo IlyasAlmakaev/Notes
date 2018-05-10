@@ -77,7 +77,7 @@ export function setUserID(id) {
 
 export function setTitle(title) {
     return (dispatch) => {
-        dispatch({ type: SET_TITLE, payload: title })
+        dispatch(setTitle(title))
     }
 }
 

@@ -42,7 +42,7 @@ class AuthorizeTemplate extends Component {
 	}
 
 	componentWillReceiveProps(props) {	
-		console.log("itt " + props.items.id + "err" + props.error);
+		console.log("ddddd " + props);
 		if (props.error) {
 			alert(props.error)
 		} else if (props.items) {

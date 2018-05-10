@@ -11,12 +11,10 @@ export function getID(id) {
 }
 
 export function setTitle(title) {
-    return(dispatch) => {
-        dispatch({
+    return {
             type: SET_TITLE,
-            payload: title
-        })
-    }
+            title
+        }
 }
 
 export function getEditTaskData(data) {
