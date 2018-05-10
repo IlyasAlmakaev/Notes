@@ -6,10 +6,10 @@ import Note from './Note'
 
 const mapStateToProps = (state) => {
 	return {
-    id: state.task.id,
-    tasks: state.task.tasks,
-    task: state.task.task,
-		error: state.task.error
+    id: state.task.present.id,
+    tasks: state.task.present.tasks,
+    task: state.task.present.task,
+		error: state.task.present.error
 	};
 };
 

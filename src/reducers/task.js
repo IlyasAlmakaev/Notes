@@ -1,5 +1,6 @@
 import { GET_USER_ID, GET_TASKS, GET_TASK, GET_ERROR, DELETE_TASK,
     GET_EDIT_TASK_DATA, REPLACE_TASK, SET_TITLE } from "../constants/Task";
+import undoable, { distinctState } from 'redux-undo';    
 
 const initialState = {
     id: '',
@@ -12,7 +13,7 @@ const initialState = {
     title: ''
 }
 
-export function task(state = initialState, action) {
+function task(state = initialState, action) {
 
     switch(action.type) {
         case GET_USER_ID:
@@ -42,3 +43,9 @@ export function task(state = initialState, action) {
             return state;
     }
 }
+
+const undoableTask = undoable(task, {
+    filter: distinctState()
+})
+
+export default undoableTask

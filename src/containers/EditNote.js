@@ -6,10 +6,10 @@ import { replaceTask, setTitle } from './RequestHandle';
 
 const mapStateToProps = (state) => {
 	return {
-    data: state.task.data,
-    error: state.task.error,
-    replacedTask: state.task.replacedTask,
-    title: state.task.title
+    data: state.task.present.data,
+    error: state.task.present.error,
+    replacedTask: state.task.present.replacedTask,
+    title: state.task.present.title
 	};
 };
 
