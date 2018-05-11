@@ -3,20 +3,25 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { request } from './ModuleHttp';
 import { replaceTask, setTitle } from './RequestHandle';
+import { ActionCreators as UndoActionCreators } from 'redux-undo';
 
 const mapStateToProps = (state) => {
 	return {
     data: state.task.present.data,
     error: state.task.present.error,
     replacedTask: state.task.present.replacedTask,
-    title: state.task.present.title
+    title: state.task.present.title,
+    canUndo: state.task.past.length > 0,
+    canRedo: state.task.future.length > 0
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
     replaceTaskFromForm: (id, taskID, data) => dispatch(replaceTask(id, taskID, data)),
-    setTitle: (title) => dispatch(setTitle(title))
+    setTitle: (title) => dispatch(setTitle(title)),
+    onUndo: () => dispatch(UndoActionCreators.undo()),
+    onRedo: () => dispatch(UndoActionCreators.redo())
 	};
 };
 
@@ -76,23 +81,21 @@ class EditNote extends Component {
 
   render() {
 
-    let self = this;
-
     return (
       <form className='add cf'>
       <input
         type='text'
         className='email'
-        onChange={self.onTitleFieldChange}
+        onChange={this.onTitleFieldChange}
         placeholder='Заголовок'
         ref='titleNote'
-        defaultValue={self.props.data.title}
+        value={this.props.data.title}
       />
       <textarea
 						className='email'
 						placeholder='Содержимое заметки'
             ref='bodyNote'
-            defaultValue={self.props.data.body}
+            defaultValue={this.props.data.body}
 			></textarea>
       <button
               className='add__btn'
@@ -106,6 +109,21 @@ class EditNote extends Component {
               ref='alert_button'>
               Закрыть
       </button>
+      <button
+              className='add__btn'
+              onClick={this.onUndo}
+              disabled={!this.canUndo}
+              ref='alert_button'>
+              Отменить
+      </button>
+      <button
+              className='add__btn'
+              onClick={this.onRedo}
+              disabled={!this.canRedo}
+              ref='alert_button'>
+              Повторить
+      </button>
+
     </form>
     );
   }
