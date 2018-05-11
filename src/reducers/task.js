@@ -1,6 +1,6 @@
 import { GET_USER_ID, GET_TASKS, GET_TASK, GET_ERROR, DELETE_TASK,
     GET_EDIT_TASK_DATA, REPLACE_TASK, SET_TITLE } from "../constants/Task";
-import undoable, { distinctState } from 'redux-undo';    
+import undoable, { includeAction } from 'redux-undo';    
 
 const initialState = {
     id: '',
@@ -45,7 +45,7 @@ function task(state = initialState, action) {
 }
 
 const undoableTask = undoable(task, {
-    filter: distinctState()
-  })
+    filter: includeAction([SET_TITLE])
+})
 
 export default undoableTask
