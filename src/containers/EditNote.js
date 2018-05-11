@@ -89,7 +89,7 @@ class EditNote extends Component {
         onChange={this.onTitleFieldChange}
         placeholder='Заголовок'
         ref='titleNote'
-        value={this.props.data.title}
+        defaultValue={this.props.data.title}
       />
       <textarea
 						className='email'
@@ -111,15 +111,15 @@ class EditNote extends Component {
       </button>
       <button
               className='add__btn'
-              onClick={this.onUndo}
-              disabled={!this.canUndo}
+              onClick={this.props.onUndo}
+              disabled={!this.props.canUndo}
               ref='alert_button'>
               Отменить
       </button>
       <button
               className='add__btn'
-              onClick={this.onRedo}
-              disabled={!this.canRedo}
+              onClick={this.props.onRedo}
+              disabled={!this.props.canRedo}
               ref='alert_button'>
               Повторить
       </button>

@@ -46,6 +46,6 @@ function task(state = initialState, action) {
 
 const undoableTask = undoable(task, {
     filter: distinctState()
-})
+  })
 
 export default undoableTask
