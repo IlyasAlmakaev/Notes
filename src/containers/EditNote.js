@@ -20,8 +20,14 @@ const mapDispatchToProps = (dispatch) => {
 	return {
     replaceTaskFromForm: (id, taskID, data) => dispatch(replaceTask(id, taskID, data)),
     setTitle: (title) => dispatch(setTitle(title)),
-    onUndo: () => dispatch(UndoActionCreators.undo()),
-    onRedo: () => dispatch(UndoActionCreators.redo())
+    onUndo: (e) => {
+      e.preventDefault();
+      dispatch(UndoActionCreators.undo());
+    },
+    onRedo: (e) => {
+      e.preventDefault();
+      dispatch(UndoActionCreators.redo());
+    } 
 	};
 };
 
@@ -77,10 +83,13 @@ class EditNote extends Component {
   
   onTitleFieldChange(e) {
     this.props.setTitle(e.target.value.trim());
+  }
+  
+  onBodyFieldChange(e) {
+    //TODO: добавить функцию
 	}
 
   render() {
-
     return (
       <form className='add cf'>
       <input
@@ -89,13 +98,14 @@ class EditNote extends Component {
         onChange={this.onTitleFieldChange}
         placeholder='Заголовок'
         ref='titleNote'
-        defaultValue={this.props.data.title}
+        value={this.props.title}
       />
       <textarea
 						className='email'
-						placeholder='Содержимое заметки'
+            placeholder='Содержимое заметки'
+            onChange={this.onBodyFieldChange}
             ref='bodyNote'
-            defaultValue={this.props.data.body}
+            value={this.props.data.body}
 			></textarea>
       <button
               className='add__btn'
