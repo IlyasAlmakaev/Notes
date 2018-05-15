@@ -3,7 +3,7 @@ import { GET_USER_DATA, GET_ERROR } from "../constants/User";
 import { GET_TASKS, GET_USER_ID, GET_TASK, API_GET_TASKS, 
     API_ADD_TASK, API_DELETE_TASK, DELETE_TASK,
     GET_EDIT_TASK_DATA, API_REPLACE_TASK, REPLACE_TASK,
-    SET_TITLE } from "../constants/Task";
+    SET_TITLE, SET_BODY } from "../constants/Task";
 
 export function itemsFetchingData(url, user, type, method) {
     return (dispatch) => {
@@ -78,6 +78,12 @@ export function setUserID(id) {
 export function setTitle(title) {
     return (dispatch) => {
         dispatch({ type: SET_TITLE, payload: title })
+    }
+}
+
+export function setBody(body) {
+    return (dispatch) => {
+        dispatch({ type: SET_BODY, payload: body })
     }
 }
 

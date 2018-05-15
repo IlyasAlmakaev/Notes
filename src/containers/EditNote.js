@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { request } from './ModuleHttp';
-import { replaceTask, setTitle } from './RequestHandle';
+import { replaceTask, setTitle, setBody } from './RequestHandle';
 import { ActionCreators as UndoActionCreators } from 'redux-undo';
 
 const mapStateToProps = (state) => {
@@ -10,7 +10,6 @@ const mapStateToProps = (state) => {
     data: state.task.present.data,
     error: state.task.present.error,
     replacedTask: state.task.present.replacedTask,
-    title: state.task.present.title,
     canUndo: state.task.past.length > 0,
     canRedo: state.task.future.length > 0
 	};
@@ -20,6 +19,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
     replaceTaskFromForm: (id, taskID, data) => dispatch(replaceTask(id, taskID, data)),
     setTitle: (title) => dispatch(setTitle(title)),
+    setBody: (body) => dispatch(setBody(body)),
     onUndo: (e) => {
       e.preventDefault();
       dispatch(UndoActionCreators.undo());
@@ -50,14 +50,14 @@ class EditNote extends Component {
     replaceTaskFromForm: PropTypes.func.isRequired,
     replacedTask: PropTypes.object.isRequired,
     setTitle: PropTypes.func,
-    title: PropTypes.string.isRequired
+    setBody: PropTypes.func
  }
 
   constructor(props) {
     super(props);
     this.onBtnEditClickHandler = this.onBtnEditClickHandler.bind(this);
     this.onBtnCloseClickHandler = this.onBtnCloseClickHandler.bind(this);
-    this.onTitleFieldChange = this.onTitleFieldChange.bind(this);
+    this.onFieldChange = this.onFieldChange.bind(this);
 }
 
   onBtnEditClickHandler(e) {
@@ -81,30 +81,29 @@ class EditNote extends Component {
     } 
   }
   
-  onTitleFieldChange(e) {
-    this.props.setTitle(e.target.value.trim());
+  onFieldChange(fieldName, e) {
+    if (fieldName == 'titleField') {
+      this.props.setTitle(e.target.value);
+    } else  {
+      this.props.setBody(e.target.value);
+    }
+    
   }
-  
-  onBodyFieldChange(e) {
-    //TODO: добавить функцию
-	}
-
+ 
   render() {
     return (
       <form className='add cf'>
       <input
         type='text'
         className='email'
-        onChange={this.onTitleFieldChange}
+        onChange={this.onFieldChange.bind(this, 'titleField')}
         placeholder='Заголовок'
-        ref='titleNote'
-        value={this.props.title}
+        value={this.props.data.title}
       />
       <textarea
 						className='email'
             placeholder='Содержимое заметки'
-            onChange={this.onBodyFieldChange}
-            ref='bodyNote'
+            onChange={this.onFieldChange.bind(this, 'bodyField')}
             value={this.props.data.body}
 			></textarea>
       <button

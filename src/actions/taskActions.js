@@ -1,5 +1,5 @@
 import { GET_USER_ID, GET_ERROR, GET_TASKS, GET_TASK, API_DELETE_TASK,
-    GET_EDIT_TASK_DATA, REPLACE_TASK, SET_TITLE  } from "../constants/Task";
+    GET_EDIT_TASK_DATA, REPLACE_TASK, SET_TITLE, SET_BODY  } from "../constants/Task";
 
 export function getID(id) {
     return(dispatch) => {
@@ -15,6 +15,15 @@ export function setTitle(title) {
         dispatch({
             type: SET_TITLE,
             payload: title
+        })
+    }
+}
+
+export function setBody(body) {
+    return(dispatch) => {
+        dispatch({
+            type: SET_BODY,
+            payload: body
         })
     }
 }
